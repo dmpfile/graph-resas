@@ -1,0 +1,9 @@
+{
+  "customSyntax": "postcss-html",
+  "extends": [
+    "stylelint-config-recommended",
+    "stylelint-config-standard",
+    "stylelint-config-standard-scss",
+    "stylelint-config-recess-order"
+  ]
+}
