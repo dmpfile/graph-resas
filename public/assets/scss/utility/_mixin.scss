@@ -1,0 +1,21 @@
+$breakpoint: (
+  sp: 'screen and (max-width: 767.98px)',
+  pc: 'screen and (min-width: 1024.98px)'
+);
+
+@mixin mq($bp) {
+  @media #{map-get($breakpoint, $bp)} {
+   @content;
+  }
+}
+
+@mixin background-set($size: contain) {
+  background-size: $size;
+  background-position: center;
+}
+
+@mixin alt-text {
+  text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
