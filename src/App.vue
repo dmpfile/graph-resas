@@ -4,4 +4,9 @@
   <div></div>
 </template>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+  #app {
+    font-family: $main-font;
+  }
+</style>
