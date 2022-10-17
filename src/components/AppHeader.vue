@@ -15,6 +15,10 @@
       width: 100%;
       max-width: 1080px;
       padding: 18px 0 18px 15px;
+      @include mq(sp) {
+        padding: 10px 0;
+        text-align: center;
+      }
     }
   }
 
@@ -22,5 +26,8 @@
     font-size: 24px;
     font-weight: bold;
     color: $color_white;
+    @include mq(sp) {
+      font-size: 18px;
+    }
   }
 </style>

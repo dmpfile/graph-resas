@@ -65,10 +65,14 @@
 <style scoped lang="scss">
   .pref {
     margin: 25px auto 50px;
+    @include mq(sp) {
+      margin: 20px auto 45px;
+    }
     &__inner {
       width: 100%;
       max-width: 1080px;
       margin: 0 auto;
+      padding: 0 28px;
     }
   }
 
@@ -86,12 +90,21 @@
     gap: 50px 30px;
     padding: 40px 50px 30px;
     list-style: none;
+    @include mq(sp) {
+      grid-template-columns: repeat(auto-fit, minmax(62px, 1fr));
+      gap: 25px 15px;
+      padding: 35px 15px 0;
+    }
     &__item {
       font-size: 20px;
       font-weight: bold;
       transition: all 0.6s;
+      white-space: nowrap;
       :hover {
         opacity: 0.6;
+      }
+      @include mq(sp) {
+        font-size: 14px;
       }
       > label {
         cursor: pointer;
