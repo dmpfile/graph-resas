@@ -32,6 +32,22 @@
     prefCompareList.value.push(...prefList)
   }
 
+  const resetPrefNameColor = () => {
+    const allPrefItem =
+      document.querySelectorAll<HTMLElement>('.pref-list__item')
+    allPrefItem.forEach((pref) => {
+      pref.style.color = ''
+    })
+  }
+
+  const resetCheckbox = () => {
+    const allPrefCheckbox =
+      document.querySelectorAll<HTMLInputElement>('[id^="pref_"]')
+    allPrefCheckbox.forEach((pref) => {
+      pref.checked = false
+    })
+  }
+
   const updateGraph = (prefList: number[]) => {
     // 初回チェック時
     if (prefCompareList.value.length === 0) {
@@ -54,7 +70,15 @@
         : removeGraph(targetCode[0])
     }
 
+    resetPrefNameColor()
     updateCompareList(prefList)
+  }
+
+  const resetGraph = () => {
+    graphData.value.splice(0)
+    prefCompareList.value.splice(0)
+    resetPrefNameColor()
+    resetCheckbox()
   }
 
   onMounted(async () => {
@@ -65,7 +89,11 @@
 <template>
   <AppHeader />
   <div class="main">
-    <PrefList :data="prefData" v-on:update-pref="updateGraph" />
+    <PrefList
+      :data="prefData"
+      v-on:update-pref="updateGraph"
+      v-on:reset-pref="resetGraph"
+    />
     <ChartGraph v-if="graphData.length" :data="graphData" />
   </div>
 </template>

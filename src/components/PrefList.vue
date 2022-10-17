@@ -8,6 +8,7 @@
 
   interface Emits {
     (e: 'updatePref', value: number[]): void
+    (e: 'resetPref'): void
   }
 
   const props = defineProps<Props>()
@@ -24,6 +25,11 @@
 
     emit('updatePref', checkedPrefCode.value)
   }
+
+  const handlerReset = () => {
+    checkedPrefCode.value.splice(0)
+    emit('resetPref')
+  }
 </script>
 
 <template>
@@ -34,15 +40,21 @@
         <li
           v-for="(pref, i) in props.data.result"
           :key="i"
+          :id="`prefItem_${pref.prefCode}`"
           class="pref-list__item"
         >
           <label :for="`pref_${pref.prefCode}`">
             <input
               type="checkbox"
-              :name="`${pref.prefCode}`"
+              :name="`${pref.prefName}`"
               :id="`pref_${pref.prefCode}`"
               @change="handlerCheckbox(pref.prefCode)"
             />{{ pref.prefName }}
+          </label>
+        </li>
+        <li class="pref-list__item" @click="handlerReset()">
+          <label for="pref_reset">
+            <input type="button" id="pref_reset" value="すべて解除" />
           </label>
         </li>
       </ul>
@@ -77,6 +89,10 @@
     &__item {
       font-size: 20px;
       font-weight: bold;
+      transition: all 0.6s;
+      :hover {
+        opacity: 0.6;
+      }
       > label {
         cursor: pointer;
         > input {

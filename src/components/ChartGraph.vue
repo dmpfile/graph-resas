@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref, onMounted, watch } from 'vue'
+  import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
   import { Line } from 'vue-chartjs'
   import {
     Chart as ChartJS,
@@ -10,7 +10,7 @@
     PointElement,
     CategoryScale,
   } from 'chart.js'
-
+  import tinycolor from 'tinycolor2'
   import type { GraphData } from 'Resas'
 
   interface Props {
@@ -21,6 +21,7 @@
     labels: number[]
     datasets: {
       label?: string
+      borderColor: string
       backgroundColor: string
       data: number[]
     }[]
@@ -37,8 +38,19 @@
     CategoryScale
   )
 
+  const chartData = ref<ChartData>({
+    labels: [],
+    datasets: [],
+  })
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+  }
+
   const targetLabel = '総人口'
 
+  // X軸生成
   const buildLabels = () => {
     if (!props.data?.length) return
     const labels = props.data[0].data.result.data
@@ -52,45 +64,55 @@
     if (labels?.length) chartData.value.labels.push(...labels)
   }
 
+  // データ生成
   const setDatasets = () => {
     if (!props.data?.length) return
 
-    // グラフ初期化
-    chartData.value.datasets.splice(0)
+    chartData.value.datasets.splice(0) // グラフ初期化
 
     const datasets = props.data.map((data) => {
-      return data.data.result.data
+      const dataList = data.data.result.data
         .map((resultData) => {
           if (resultData.label === targetLabel) {
             return resultData.data.map((data) => data.value)
           }
         })
         .filter((val) => val)[0]
+
+      return {
+        code: data.code,
+        data: dataList,
+      }
     })
 
-    datasets.forEach((dataset, i) => {
-      if (!dataset?.length) return
+    datasets.forEach((dataset) => {
+      if (!dataset.data?.length) return
+
+      const color = tinycolor(
+        `hsl(${Math.random() * 100}, 80, 50)`
+      ).toHslString()
+
+      const prefItem = document.getElementById(`prefItem_${dataset.code}`)
+      if (prefItem) prefItem.style.color = color
 
       chartData.value.datasets.push({
-        backgroundColor: `#f8797${i}`,
-        data: dataset,
+        label: (
+          document.getElementById(`pref_${dataset.code}`) as HTMLInputElement
+        ).name,
+        data: dataset.data,
+        borderColor: color,
+        backgroundColor: color,
       })
     })
-  }
-
-  const chartData = ref<ChartData>({
-    labels: [],
-    datasets: [],
-  })
-
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
   }
 
   onMounted(() => {
     buildLabels()
     setDatasets()
+  })
+
+  onBeforeUnmount(() => {
+    chartData.value.datasets.splice(0)
   })
 
   watch(
