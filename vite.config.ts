@@ -25,9 +25,10 @@ export default defineConfig({
   },
   build: {
     outDir,
+    assetsDir: 'resas/assets/',
     rollupOptions: {
       input: {
-        resas: resolve(root, 'resas', 'index.html'),
+        resas: './resas/index.html',
       },
     },
   },
