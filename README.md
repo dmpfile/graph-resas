@@ -1,46 +1,63 @@
-# graph-resas
+# RESAS総人口推移グラフ
 
-This template should help get you started developing with Vue 3 in Vite.
+## 概要
+- 株式会社ゆめみのフロントエンドコーディング試験で作成したリポジトリ
 
-## Recommended IDE Setup
+## 開発環境
+- ビルドツール
+    - vite（v3.0.9）
+- フレームワーク
+    - vue（v3.2.38）
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## クローン後
+```shell
+# パッケージインストール
+yarn install
 
-## Type Support for `.vue` Imports in TS
+# ローカルサーバー起動
+yarn dev
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+# ビルド
+yarn build
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
+## ファイル構成
+```shell
+.
+├── README.md
+├── env.d.ts
+├── package.json
+├── public
+│   └── favicon.ico
+├── resas
+│   └── index.html
+├── src
+│   ├── @types
+│   │   └── resas.d.ts
+│   ├── App.vue
+│   ├── api
+│   │   └── resas.ts # RESAS APIの処理をまとめたファイル
+│   ├── assets
+│   │   └── scss
+│   │       └── utility
+│   │           ├── _function.scss
+│   │           ├── _index.scss
+│   │           ├── _mixin.scss
+│   │           └── _variables.scss
+│   ├── components
+│   │   ├── AppHeader.vue
+│   │   ├── ChartGraph.vue
+│   │   └── PrefList.vue
+│   └── main.ts # エントリーポイント
+├── tsconfig.config.json
+├── tsconfig.json
+├── vite.config.ts
+└── yarn.lock
 ```
 
-### Type-Check, Compile and Minify for Production
+## 注意
+- このリポジトリは試験用のため完全には動作しません
 
-```sh
-npm run build
-```
+## 著者
+- Ryosuke（[@dmpfile](https://github.com/dmpfile)）
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
